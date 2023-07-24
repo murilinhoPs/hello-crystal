@@ -1,0 +1,13 @@
+name: myapp
+version: 0.1.0
+
+authors:
+  - murilinhops <murilo.pescatori@nubank.com.br>
+
+targets:
+  myapp:
+    main: src/myapp.cr
+
+crystal: 1.9.2
+
+license: MIT
