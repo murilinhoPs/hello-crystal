@@ -2,11 +2,16 @@ name: myapp
 version: 0.1.0
 
 authors:
-  - murilinhops <murilo.pescatori@nubank.com.br>
+  - murilinhops <murilinhorps@gmail.com>
 
 targets:
   myapp:
     main: src/myapp.cr
+
+development_dependencies:
+  crystalline:
+    github: elbywan/crystalline
+    branch: master
 
 crystal: 1.9.2
 
