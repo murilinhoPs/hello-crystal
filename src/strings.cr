@@ -13,20 +13,28 @@ puts texto.includes?("crystal") # true
 puts texto.starts_with?("bla")  # false
 puts texto.ends_with?("noobs")  # true
 
+message = "Hello World!"
+puts message == "Hello Crystal!",                          # false
+  message.compare("hello world!", case_insensitive: true), # 0
+  message.compare("hello world", case_insensitive: true),  # 1
+  message.compare("hello world!", case_insensitive: false) # -1
+
 text2 = "my cat is crazy"
 puts text2
 new_text = text2.sub("crazy", "cute")
 puts "now %s" % new_text # concat string with % and one element
 
 vazio = ""
-puts vazio.size   # return 0
-puts vazio.empty? # true
-puts vazio.blank? # true
+puts vazio.size     # return 0
+puts vazio.empty?   # true
+puts vazio.blank?   # true
+puts vazio.presence # nil
 
 blank_space = "  \t\n\n\t"
-puts blank_space.size   # returns 6
-puts blank_space.empty? # true, nada escrito nela
-puts blank_space.blank? # false, não tem nada escrito mas ela não está vazia tem espaçamentos
+puts blank_space.size     # returns 6
+puts blank_space.empty?   # true, nada escrito nela
+puts blank_space.blank?   # false, não tem nada escrito mas ela não está vazia tem espaçamentos
+puts blank_space.presence # nil
 
 numberS = "42.5"
 numberIntS = "42"
@@ -52,3 +60,9 @@ puts "O meu nome é %s e minha idade é %s" % {name, age}                       
 puts "O meu nome é %s e minha idade é %s" % [name, age]                         # Array
 puts "O meu nome é %{nome} e minha idade é %{idade}" % {nome: name, idade: age} # Named Tuple
 sprintf "O meu nome é %s e minha idade é %s", name, age
+
+text5 = "Hello World!"
+puts text5[6, 5], # depois do index 6 (.....o ), retorna 5 chars da string => World
+  text5.size,
+  text5[6, text5.size - 6 - 1], # extrair apenas o que está entre Hello e !, subtrair o tamanho da string menos o tamanho do começo e do final de chars (6 no inicio e 1 no final)
+  text5[6..-2]
