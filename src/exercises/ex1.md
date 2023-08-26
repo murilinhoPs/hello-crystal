@@ -1,5 +1,5 @@
 # Problema
-o usuário precisa adivinhar um número aleatório de 1 a 20 digitando no console, o programa termina
+o usuário precisa adivinhar um número aleatório de 1 a "5" digitando no console, o programa termina
 quando o usuário acertar e deve informar ao usuário quando for menor ou maior que o número aleatório
 
 ## resumo
