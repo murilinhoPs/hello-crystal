@@ -65,4 +65,10 @@ text5 = "Hello World!"
 puts text5[6, 5], # depois do index 6 (.....o ), retorna 5 chars da string => World
   text5.size,
   text5[6, text5.size - 6 - 1], # extrair apenas o que está entre Hello e !, subtrair o tamanho da string menos o tamanho do começo e do final de chars (6 no inicio e 1 no final)
-  text5[6..-2]
+  text5[6..-2],                 # -1 para o final do index (indicar que é o final), -1 excluindo o ultimo caractere
+  text5.sub(6..-2, "Crystal"),  # replace the first index to -2 o mesmo de baixo
+  text5.sub("World", "Crystal") # replace world for crystal
+
+text6 = "Hello World! How are you, World?"
+puts text6.sub("World", "Crystal"), # replace FIRST World occurences
+  text6.gsub("World", "Crystal")# replace ALL World occurences
