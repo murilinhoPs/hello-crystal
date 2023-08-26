@@ -8,6 +8,7 @@ puts texto.reverse
 puts texto[0]    # retorna o char daquela posicao da string, "c"
 puts texto[0, 4] # retorna os 4 primeios chars "crys"
 puts texto[0..4] # retorna os 4 primeiros chars, "cryst"
+puts texto.index("noobs") # if doesnt exists returns nil
 
 puts texto.includes?("crystal") # true
 puts texto.starts_with?("bla")  # false
@@ -71,4 +72,4 @@ puts text5[6, 5], # depois do index 6 (.....o ), retorna 5 chars da string => Wo
 
 text6 = "Hello World! How are you, World?"
 puts text6.sub("World", "Crystal"), # replace FIRST World occurences
-  text6.gsub("World", "Crystal")# replace ALL World occurences
+  text6.gsub("World", "Crystal") # replace ALL World occurences
