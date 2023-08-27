@@ -5,9 +5,9 @@ puts typeof(texto) # tipo da variavel
 puts texto.size
 puts texto.reverse
 
-puts texto[0]    # retorna o char daquela posicao da string, "c"
-puts texto[0, 4] # retorna os 4 primeios chars "crys"
-puts texto[0..4] # retorna os 4 primeiros chars, "cryst"
+puts texto[0]             # retorna o char daquela posicao da string, "c"
+puts texto[0, 4]          # retorna os 4 primeios chars "crys"
+puts texto[0..4]          # retorna os 4 primeiros chars, "cryst"
 puts texto.index("noobs") # if doesnt exists returns nil
 
 puts texto.includes?("crystal") # true
@@ -66,10 +66,11 @@ text5 = "Hello World!"
 puts text5[6, 5], # depois do index 6 (.....o ), retorna 5 chars da string => World
   text5.size,
   text5[6, text5.size - 6 - 1], # extrair apenas o que está entre Hello e !, subtrair o tamanho da string menos o tamanho do começo e do final de chars (6 no inicio e 1 no final)
-  text5[6..-2],                 # -1 para o final do index (indicar que é o final), -1 excluindo o ultimo caractere
+  text5[6..-2],                 # -1 para o ultimo index (indica que é o final), -1 excluindo o ultimo caractere que é "!"
+  text5[6...-1],
   text5.sub(6..-2, "Crystal"),  # replace the first index to -2 o mesmo de baixo
   text5.sub("World", "Crystal") # replace world for crystal
 
 text6 = "Hello World! How are you, World?"
 puts text6.sub("World", "Crystal"), # replace FIRST World occurences
-  text6.gsub("World", "Crystal") # replace ALL World occurences
+  text6.gsub("World", "Crystal")    # replace ALL World occurences
