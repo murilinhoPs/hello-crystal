@@ -29,7 +29,7 @@ puts planets2        # ["Marte", "Júpiter", "Saturno", "Plutão"]
 planets2.push("Vênus")
 puts planets2 # ["Marte", "Júpiter", "Saturno", "Plutão", "Vênus"]
 
-# declaring arrays
+# declaring empty arrays
 vazio = [] of Int32 # não pode ser um array vazio: array = []
 puts vazio.size,    # 0
   vazio.empty?      # true
@@ -41,16 +41,69 @@ outro = Array(Int32).new
 puts typeof(outro), # Array(Int32)
   outro.size        # 0
 
-texto = "123456789112778" # quantas vezes um NUMERO aparece numa string
+# quantas vezes um NUMERO aparece na string
+texto = "123456789112778"
 puts texto.size
-count = [0] * 10 # array de tamanho 10, pq os numeros vao de 0 a 9. Nessa caso começa no 1 pq não tem 0, então 0 sempre vai ser 0
+count = [0] * 10 # array de tamanho 10 com cada index de valor 0 (os numeros vao de 0 a 9). Nessa caso começa no 1 pq não tem 0, então 0 sempre vai ser 0
 
-puts count
 texto.each_char { |chr|
-  puts "char: #{chr.to_i}"
-  puts count[chr.to_i] += 1 # passa pelos indexes da string e adiciona +1 em cada index que passou mais de uma vez
+  puts count[chr.to_i] += 1 # passa pelos indexes da string e adiciona +1 em cada index que passou mais de uma vez. O index é igual o numero na string, index 0 = numero 0; index 1 = numero 1; index 9 = numero 9....
 }
+
 puts count
 count.each_with_index { |value, idx|
   puts "index: #{idx} #{value}" # printa os indexes de cada numero e quantas vezes ele apareceu
 }
+
+# sum the arrays, add one array into the other in the order the sum occured
+a = [2, 3, 4]
+b = [5, 7, 9]
+p! b + a # 5, 7, 9, 2, 3, 4]
+
+# print the array multiple times
+x = [1, 2] * 3 # [1, 2, 1, 2, 1, 2], mostra o vetor 3 vezes
+y = [0] * 10   # array de 10 posicoes com valor 0
+p! x
+p! y
+
+numeros = [10, 20, 21, 7, 5]
+# arr.select! => modifies current array, side effect
+bigger_than_ten = numeros.select do |num|
+  num > 10
+end
+puts numeros.select { |num| num > 10 } # [20, 21]
+puts bigger_than_ten                   # [20, 21]
+
+smaller_than_ten = numeros.select { |num| num < 10 }
+puts smaller_than_ten # [7, 5]
+
+planets = ["Mercúrio", "Vênus", "Terra", "Marte", "Júpiter"]
+puts planets.sample   # returns a random value from array
+puts planets.sample 2 # returns TWO random values from array ou planets.sample(2)
+puts planets.shuffle  # returns the array in a random way
+
+nomes = ["Crystal", "4", "Noobs"]
+puts nomes.join "-" # join the values from array using a "-" as separator
+
+# Manipulate arrays
+planets = ["Mercúrio", "Vênus", "Terra", "Marte", "Júpiter"]
+planets.delete "Terra" # delete a value from the current/self array, doenst return a new array
+puts planets # ["Mercúrio", "Vênus", "Marte", "Júpiter"]
+
+planets = ["Mercúrio", "Vênus", "Terra", "Marte", "Júpiter"]
+planets.delete_at(2) # delete at index 2, "Terra"
+puts planets # ["Mercúrio", "Vênus", "Marte", "Júpiter"]
+
+planets = ["Mercúrio", "Vênus", "Terra", "Marte", "Júpiter"]
+puts planets.includes?("Mercúrio"), # true
+  planets.first,
+  planets[0]
+
+planets = ["Mercúrio", "Vênus", "Terra", "Marte", "Júpiter"]
+planets.insert 1, "Plutão" # planets.insert(1, "Plutao") => adds the value at the given indes
+puts planets # ["Mercúrio", "Plutão", "Vênus", "Terra", "Marte", "Júpiter"]
+
+planets = ["Mercúrio", "Vênus", "Mercúrio", "Terra", "Marte", "Júpiter", "Mercúrio"]
+puts planets.uniq # ["Mercúrio", "Vênus", "Terra", "Marte", "Júpiter"]
+planets.uniq! # returns the current/self array without duplicates => ! is a side effec on self
+puts planets # ["Mercúrio", "Vênus", "Terra", "Marte", "Júpiter"]
