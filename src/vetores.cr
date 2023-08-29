@@ -41,16 +41,16 @@ outro = Array(Int32).new
 puts typeof(outro), # Array(Int32)
   outro.size        # 0
 
-texto = "123456789112777"
+texto = "123456789112778" # quantas vezes um NUMERO aparece numa string
 puts texto.size
-count = [0] * 10
+count = [0] * 10 # array de tamanho 10, pq os numeros vao de 0 a 9. Nessa caso começa no 1 pq não tem 0, então 0 sempre vai ser 0
 
 puts count
 texto.each_char { |chr|
-#   puts chr.to_i
-  puts count[chr.to_i] += 1
+  puts "char: #{chr.to_i}"
+  puts count[chr.to_i] += 1 # passa pelos indexes da string e adiciona +1 em cada index que passou mais de uma vez
 }
 puts count
 count.each_with_index { |value, idx|
-  puts "index: #{idx} #{value}"
+  puts "index: #{idx} #{value}" # printa os indexes de cada numero e quantas vezes ele apareceu
 }
