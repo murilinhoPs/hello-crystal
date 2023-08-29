@@ -30,3 +30,13 @@ while n < 5
     end
     puts n
 end
+
+counter = 0
+while true
+  counter += 1
+  puts "Counter: #{counter}"
+
+  if counter >= 10
+    break
+  end
+end
