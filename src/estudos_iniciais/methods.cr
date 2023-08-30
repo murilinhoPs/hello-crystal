@@ -35,4 +35,7 @@ end
 puts adds_2 40
 puts adds_3 40
 
-
+def soma(*n : Int32) # somar varios numeros, sendo que vc nao sabe a quantidade
+  n.sum
+end
+puts(soma(1,3,4))
