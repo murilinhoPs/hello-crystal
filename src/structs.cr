@@ -5,7 +5,7 @@ struct Person
   property name : String # property = getter and setter, get value and modify it
   getter email : String  # only get this value
 
-  def initialize(@name : String, @email : String) # directly passing @email and @name, choose to pass or not the type
+  def initialize(@name, @email : String) # directly passing @email and @name, choose to pass or not the type
     @id = UUID.random
     @created_at = Time.utc
   end
