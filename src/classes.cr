@@ -1,3 +1,5 @@
+require "json"
+
 class PessoaExz
   def initialize(nome : String, altura : Float64)
     @nome = nome
@@ -80,3 +82,70 @@ lucky = Lucky.new nil
 puts lucky.lucky_number # 42
 lucky = Lucky.new 44
 puts lucky.lucky_number # 44
+
+class JsonPerson
+  include JSON::Serializable
+
+  property height : Float64
+  getter name : String
+
+  def initialize(@name, @height)
+  end
+
+  def print_name
+    puts @name
+  end
+
+  def change_height(value : Float64) # Crystal combina todas as definições da classe em uma só
+    @height = value
+  end
+end
+
+pessoa = JsonPerson.from_json(%{{"name": "Joao", "height": 1.74}})
+puts pessoa.name,
+  pessoa.height
+
+pessoa.height = 1.78
+puts pessoa.height
+
+class AgePerson
+  getter age : Int32
+
+  def initialize(@name : String, @age : Int = 0)
+  end
+
+  def become_older
+    @age += 1
+  end
+
+  def become_older(years : Int32) # overloading methods
+    @age += years
+  end
+
+  def become_older(years : String)
+    @age += years.to_i
+  end
+
+  # Yields the current age of this person and increases
+  # its age by the value returned by the block
+  def become_older(&)
+    @age += yield @age
+  end
+end
+
+joao = AgePerson.new "Joao"
+puts joao.age
+
+joao.become_older
+puts joao.age # 1
+
+joao.become_older(5)
+puts joao.age # 6
+
+joao.become_older("12")
+puts joao.age # 18
+
+joao.become_older { |current_age|
+  current_age < 20 ? 10 : 30 # se for menor que 20, adiciona 10 na idade se não adiciona 30
+}
+puts joao.age # 28 (18 + 10)
