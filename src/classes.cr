@@ -145,7 +145,7 @@ puts joao.age # 6
 joao.become_older("12")
 puts joao.age # 18
 
-joao.become_older { |current_age|
-  current_age < 20 ? 10 : 30 # se for menor que 20, adiciona 10 na idade se não adiciona 30
-}
+joao.become_older { |current_age| # become_older do |current_age| ... end
+ current_age < 20 ? 10 : 30       # se for menor que 20, adiciona 10 na idade se não adiciona 30
+ }
 puts joao.age # 28 (18 + 10)
