@@ -78,3 +78,76 @@ end
 
 tuple = {y: 3, x: 10}
 double_splat_tuple **tuple # => 7, posso passar uma named tuple como argumento em splat com **
+
+class Six
+  def +(num)
+    6 + num
+  end
+end
+
+def add(x, y)
+  x + y
+end
+
+def restrict_add(x : Number, y : Number) # Só vai aceitar number
+  x + y
+end
+
+puts add Six.new, 10 # => 16
+# restrict_add Six.new, 10 expected argument #1 to 'restrict_add' to be Number, not Six
+# mesmo que a classe ou objeto tenha o método + nesse caso não pode passar como param
+# pq não é um numero, melhor criar variacoes do método dependendo do que ele pode aceitar
+
+def accept_type(x : Int32.class)
+  puts "Got Int32"
+end
+
+def accept_type(x : String.class)
+  puts "Got String"
+end
+
+accept_type 32.class # => "Got Int32"
+accept_type String   # => Got String"
+
+def restrict_tuples_splt(*args : Int32) # só vai aceitar tipo de int32 na tuple inteira
+end
+
+def any_tuples(*args : _) # pode aceitar multiplos tipos
+end
+
+# Free variables
+def free_type(x : T) forall T # use a free Type = forall T, can use the T for validations
+  puts T
+end
+
+free_type 1        # Int32
+free_type("hello") # String
+
+def free_array(x : Array(T)) forall T
+  puts "Array: #{T}"
+end
+
+free_array [1, 2]   # => Array: Int32
+free_array [3, "a"] # => Array: (Int32 | String)
+
+def free_class_type(x : T.class) forall T
+  p! Array(T)
+end
+
+free_class_type(Int32)  # => Array(Int32)
+free_class_type(String) # => Array(String)
+
+def multi_free(element : T, array : Array(T)) forall T
+  array << element
+end
+
+puts multi_free(4, [1, 2, 3]) # => [1, 2, 3, 4] todos os argumentos precisam ser do mesmo Type
+
+def foo(*x : *{Int32, String})
+end
+
+def foo(*x : *T) forall T
+end
+
+def foo(**x : **T) forall T
+end

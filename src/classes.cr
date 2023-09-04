@@ -149,3 +149,27 @@ joao.become_older { |current_age| # become_older do |current_age| ... end
  current_age < 20 ? 10 : 30       # se for menor que 20, adiciona 10 na idade se não adiciona 30
  }
 puts joao.age # 28 (18 + 10)
+
+class ComparePerson
+  getter name : String
+
+  def initialize(@name)
+  end
+
+  def self.compare(p1 : self, p2 : self)
+    p1 == p2
+  end
+
+  def ==(other : self) # other for ComparePerson e o nome igual a outra retorna true
+    other.name == name
+  end
+
+  def ==(other)
+    false
+  end
+end
+
+john = ComparePerson.new "John"
+peter = ComparePerson.new "Peter"
+
+puts ComparePerson.compare(john, peter) # false
