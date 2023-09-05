@@ -1,10 +1,11 @@
-def some_method(x, y = 1, z = 3) # x is required, não tem default value
+def some_method(x, y = 1, z = 3) # x is required, não tem default value, y e z sao nomeados
 end
 
 some_method 10, z: 4, y: 6
 some_method 10, y: 2, z: 3
 some_method y: 3, x: 8
 
+# some_method 10, y: 3, x: 2 # Error: argument for parameter 'x' already specified
 def sum(*numbers) # *... splat parameter
   total = 0
   numbers.each do |value|
@@ -16,7 +17,7 @@ end
 # numbers are treated as a Tuple(Int32, Int32, Int32)
 puts sum(1, 2, 3) # => 6
 
-# todo parametro dps do *splat é paremetro NOMEADO
+# todo parametro dps do *splat é paremetro NOMEADO (nao precisa ter default value)
 
 def sum(*numbers, initial = 0) # named argument (not required)
   total = initial
@@ -40,11 +41,11 @@ end
 # puts sum 1, 2, 3  # Error, missing argument: initial
 puts sum 1, 2, 5, initial: 10 # => 18
 
-def foo(*elements, x)
+def foo(*, x)
   1
 end
 
-def foo(*elements, y) # overload com y ou x
+def foo(*, y) # overload com y ou x
   2
 end
 
@@ -150,4 +151,39 @@ def foo(*x : *T) forall T
 end
 
 def foo(**x : **T) forall T
+end
+
+def with_proc(x : Proc(*T, Int32)) forall T # explicado em outra sessão
+  T
+end
+
+def return_string : String
+  "Hello!"
+end
+
+def return_nil : Nil # sempre vai retornar Nil independente do resultado da função, o retorno não interessa (o mesmo que Void)
+  1 + 2
+end
+
+# def return_void : Void # mais usado com C bindings
+#     1 + 2
+# end
+# https://crystal-lang.org/reference/1.9/syntax_and_semantics/return_types.html
+puts typeof("hello")          # => String
+puts typeof(raise "No Input") # => NoReturn
+
+def names_example(external_name internal_name)
+  puts internal_name # nome usado internamente pelo método
+end
+
+names_example external_name: 1
+
+def plan(begin begin_time, end end_time) # usado nomes com keywords
+  puts "Planning between #{begin_time} and #{end_time}"
+end
+
+plan begin: Time.local, end: 2.days.from_now
+
+def increment(value, by amount) # um nome diferente internamente for better read
+  value + amount
 end
