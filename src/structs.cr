@@ -87,3 +87,29 @@ end
 endereco = Endereco.new("Rua 3", "São Paulo", "Brasil")
 pessoa = Pessoa.new("Murilo", "murilinhops@email.com", endereco)
 pp! pessoa # quebra de linha
+
+struct Vector2
+  getter x, y
+
+  def initialize(@x : Int32, @y : Int32)
+  end
+
+  # Unary operator, inverted vector2 of `self` (one operand)
+  def - : self # vector2 type
+    Vector2.new(-x, -y)
+  end
+
+  # Binary operator, returns other vector added to `self` (two operands)
+  def +(other : self) : self # recebe um vector2 e soma a ele mesmo (soma de vetores)
+    Vector2.new(x + other.x, y + other.y)
+  end
+
+  # Unary operators perform an action with a single operand (only self.x and self.y).
+  # Binary operators perform actions with two operands (other and self).
+end
+
+vector2 = Vector2.new 1, 2
+puts -vector2 # => Vector2(@x=-1, @y=-2), vetor invertido
+
+other_vector2 = Vector2.new 3, 4
+puts vector2 + other_vector2 # => Vector2(@x=4, @y=6)

@@ -45,7 +45,7 @@ def sum(x : Int32, y : Int32)
   x + y
 end
 
-def_sum_proc = ->sum(Int32, Int32)
+def_sum_proc = ->sum(Int32, Int32) # reference the function sum
 num_proc(x: 2, y: 4, proc: def_sum_proc) # => 6
 
 def minus(x : Int32, y : Int32)

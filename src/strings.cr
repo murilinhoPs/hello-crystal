@@ -74,3 +74,9 @@ puts text5[6, 5], # depois do index 6 (.....o ), retorna 5 chars da string => Wo
 text6 = "Hello World! How are you, World?"
 puts text6.sub("World", "Crystal"), # replace FIRST World occurences
   text6.gsub("World", "Crystal")    # replace ALL World occurences
+
+name, age = "Murilo", 24 # multiple assignment, serve para index numa lista também
+
+name, age, source = "Murilo, 24, GitHub".split(", ") # setei 3 elementos, como a verificação do erro esta
+
+_ = "nada" # ignora essa linha, nunca vai ser lida pelo programa

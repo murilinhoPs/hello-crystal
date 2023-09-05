@@ -14,6 +14,10 @@ puts Math.cos(1),  # cosseno em radianos
   Math.log10(312), # logaritmo na base 10
   Math.sqrt(9)     # raiz quadrada, 3
 
-  # Math::E, # Euler's number
-  # Math::TAU,  # Full circle constant (2 * PI)
-  # Math::PI    # Archimedes' constant (TAU / 2)
+# Math::E, # Euler's number
+# Math::TAU,  # Full circle constant (2 * PI)
+# Math::PI    # Archimedes' constant (TAU / 2)
+
+a = 10
+puts a.+(1) # => 11
+puts a + 1 # => 11

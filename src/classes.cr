@@ -30,6 +30,8 @@ class Person
   property name : String
   getter age : Int32, height : Float64
 
+  def name=(value); end # um tipo de setter simples pro name
+
   def initialize(@name, @height)
     @age = 14
   end
@@ -56,7 +58,7 @@ end
 
 pessoa = Person.new(name: "Jorge", height: 1.65) # ==  Person.new "Jorge" 1.65
 pessoa.print_name
-pessoa.name = "Jorge II"
+pessoa.name=("Jorge II") #
 pessoa.print_name
 
 puts pessoa.height
@@ -173,3 +175,10 @@ john = ComparePerson.new "John"
 peter = ComparePerson.new "Peter"
 
 puts ComparePerson.compare(john, peter) # false
+
+class List
+    def []=(index, value); end
+end
+
+list = List.new
+list.[]=(2, 3)
