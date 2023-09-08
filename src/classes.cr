@@ -177,8 +177,169 @@ peter = ComparePerson.new "Peter"
 puts ComparePerson.compare(john, peter) # false
 
 class List
-    def []=(index, value); end
+  def []=(index, value); end
 end
 
 list = List.new
 list.[]=(2, 3)
+
+class PersonVisiblity
+  private def say(message : String) # only accessible from it self or (inside) of any subclass, nao é acessivel pela instancia
+    puts message
+  end
+
+  def say_hello
+    say "hello"
+    self.say "hello self" # chamar o metodo de si mesmo tipo this.gameObject
+    ohterPerson = PersonVisiblity.new
+    # ohterPerson.say "hello"# => Error: private method 'say' called for PersonVisiblity
+  end
+end
+
+class Employee1 < Person
+  def say_bye
+    say "bye" # can access say method, is a subclass
+  end
+end
+
+personVisiblity = PersonVisiblity.new
+personVisiblity.say_hello
+
+class Foo
+  private class FooFoo
+  end
+
+  a = FooFoo.new
+  # Foo::FooFoo => Error: private constant Foo::FooFoo referenced, só passo acessar pela classe internamente
+
+  private ONE = 1
+  b = ONE # OK
+end
+
+# Foo::ONE => Error: private constant Foo::ONE referenced
+foo = Foo.new
+
+# protected can be invoked on instances of the same type as the currrent type and instances in the same namespace
+class ProtectedPerson
+  protected def say(message : String)
+    puts message
+  end
+
+  def say_hello
+    say "hello p"
+    self.say "hello p"
+
+    other = ProtectedPerson.new
+    other.say # same type and same namespace
+  end
+end
+
+one_more_protected = ProtectedPerson.new
+
+# one_more_protected.say "hello" => Error: protected method 'say' called for ProtectedPerson
+
+class Animal
+  def make_a_person_talk
+    person = Person.new
+    # person.say "hello" => Error: person is a Person but current type is an Animal
+  end
+end
+
+module NamespaceTest
+  class Foo
+    protected def foo
+      puts "Hello"
+    end
+  end
+
+  class Bar
+    def bar
+      # Works, because Foo and Bar are under the same Namespace
+      Foo.new.foo
+    end
+  end
+end
+
+class Parent
+  protected def self.protected_method
+    puts "protected_method"
+  end
+
+  def instance_method
+    Parent.protected_method
+  end
+
+  def self.class_method
+    Parent.protected_method
+  end
+end
+
+class Child < Parent
+  Parent.protected_method # can call
+
+  def instance_method
+    Parent.protected_method # OK
+  end
+end
+
+class Parent::Sub
+  Parent.protected_method
+end
+
+# Parent.new.protected_method => Error: undefined method 'protected_method' for Parent
+# Parent.protected_method => Error: protected method 'protected_method' called for Parent.class
+Parent.new.instance_method # Parent.instance_method
+
+private def current_file_top_level # only visible in current file, the same for self.methods inside private classes
+  puts "Hello"
+end
+
+class Human
+  def initialize(@name : String)
+  end
+
+  def greet
+    puts "Hi, I'm #{@name}"
+  end
+
+  def say(msg : String)
+    puts "Hi, #{msg}"
+  end
+end
+
+class Children < Human
+end
+
+child = Children.new "Child"
+child.greet
+child.say "I'm just a kiiiiid And life is a nightmare"
+
+class Employee < Human
+  # When defined a new or initialize, its superclass constructors are not inherited
+  def initialize(@name : String, @company_name : String)
+  end
+
+  def greet
+    super # can call supermethods, it will call greet from superclass (Human)
+    puts "Hi, I'm #{@name} and work at #{@company_name}"
+  end
+
+  def say(msg : Int32) # override methods, can change the type of the message (specialized methods)
+    puts "Good Night, I worked for #{msg} hours"
+  end
+end
+
+# Employee.new "Jorge" => Error: wrong number of arguments for 'Employee.new' (given 1, expected 2)
+employee = Employee.new "Jorge", "Microsoft"
+employee.greet
+employee.say 9
+
+class Bar
+end
+
+class BarBar < Bar
+end
+
+bar_bar_arr = [BarBar.new] of BarBar # default, current type
+bar_bar_arr2 = [BarBar.new] of Bar # cast to be a Bar array, wich it's right bc BarBar is a Bar
+# bar_arr = [Bar.new] of BarBar => error, Bar cant be a BarBar but BarBar can be a Bar
