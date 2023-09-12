@@ -98,7 +98,7 @@ class JsonPerson
     puts @name
   end
 
-  def change_height(value : Float64) # Crystal combina todas as definições da classe em uma só
+  def change_height(value : Float64) # *Crystal combina todas as definições da classe em uma só
     @height = value
   end
 end
@@ -120,7 +120,7 @@ class AgePerson
     @age += 1
   end
 
-  def become_older(years : Int32) # overloading methods
+  def become_older(years : Int32) # ?overloading methods
     @age += years
   end
 
@@ -128,8 +128,8 @@ class AgePerson
     @age += years.to_i
   end
 
-  # Yields the current age of this person and increases
-  # its age by the value returned by the block
+  # *Yields the current age of this person and increases
+  # *its age by the value returned by the block
   def become_older(&)
     @age += yield @age
   end
@@ -147,7 +147,7 @@ puts joao.age # 6
 joao.become_older("12")
 puts joao.age # 18
 
-joao.become_older { |current_age| # become_older do |current_age| ... end
+joao.become_older { |current_age| # ?become_older do |current_age| ... end
  current_age < 20 ? 10 : 30       # se for menor que 20, adiciona 10 na idade se não adiciona 30
  }
 puts joao.age # 28 (18 + 10)
@@ -162,7 +162,7 @@ class ComparePerson
     p1 == p2
   end
 
-  def ==(other : self) # other for ComparePerson e o nome igual a outra retorna true
+  def ==(other : self) # ?other for ComparePerson e o nome igual a outra retorna true
     other.name == name
   end
 
@@ -184,15 +184,15 @@ list = List.new
 list.[]=(2, 3)
 
 class PersonVisiblity
-  private def say(message : String) # only accessible from it self or (inside) of any subclass, nao é acessivel pela instancia
+  private def say(message : String) # *only accessible from it self or (inside) of any subclass, nao é acessivel pela instancia
     puts message
   end
 
   def say_hello
     say "hello"
-    self.say "hello self" # chamar o metodo de si mesmo tipo this.gameObject
+    self.say "hello self" # ?chamar o metodo de si mesmo tipo this.gameObject
     ohterPerson = PersonVisiblity.new
-    # ohterPerson.say "hello"# => Error: private method 'say' called for PersonVisiblity
+    # !ohterPerson.say "hello"# => Error: private method 'say' called for PersonVisiblity
   end
 end
 
@@ -210,16 +210,16 @@ class Foo
   end
 
   a = FooFoo.new
-  # Foo::FooFoo => Error: private constant Foo::FooFoo referenced, só passo acessar pela classe internamente
+  # !Foo::FooFoo => Error: private constant Foo::FooFoo referenced, só passo acessar pela classe internamente
 
   private ONE = 1
   b = ONE # OK
 end
 
-# Foo::ONE => Error: private constant Foo::ONE referenced
+# !Foo::ONE => Error: private constant Foo::ONE referenced
 foo = Foo.new
 
-# protected can be invoked on instances of the same type as the currrent type and instances in the same namespace
+# ?protected can be invoked on instances of the same type as the currrent type and instances in the same namespace
 class ProtectedPerson
   protected def say(message : String)
     puts message
@@ -236,12 +236,12 @@ end
 
 one_more_protected = ProtectedPerson.new
 
-# one_more_protected.say "hello" => Error: protected method 'say' called for ProtectedPerson
+# !one_more_protected.say "hello" => Error: protected method 'say' called for ProtectedPerson
 
 class Animal
   def make_a_person_talk
     person = Person.new
-    # person.say "hello" => Error: person is a Person but current type is an Animal
+    # !person.say "hello" => Error: person is a Person but current type is an Animal
   end
 end
 
@@ -286,11 +286,11 @@ class Parent::Sub
   Parent.protected_method
 end
 
-# Parent.new.protected_method => Error: undefined method 'protected_method' for Parent
-# Parent.protected_method => Error: protected method 'protected_method' called for Parent.class
+# !Parent.new.protected_method => Error: undefined method 'protected_method' for Parent
+# !Parent.protected_method => Error: protected method 'protected_method' called for Parent.class
 Parent.new.instance_method # Parent.instance_method
 
-private def current_file_top_level # only visible in current file, the same for self.methods inside private classes
+private def current_file_top_level # *only visible in current file, the same for self.methods inside private classes
   puts "Hello"
 end
 
@@ -315,21 +315,21 @@ child.greet
 child.say "I'm just a kiiiiid And life is a nightmare"
 
 class Employee < Human
-  # When defined a new or initialize, its superclass constructors are not inherited
+  # *When defined a new or initialize, its superclass constructors are not inherited
   def initialize(@name : String, @company_name : String)
   end
 
   def greet
-    super # can call supermethods, it will call greet from superclass (Human)
+    super # *can call supermethods, it will call greet from superclass (Human)
     puts "Hi, I'm #{@name} and work at #{@company_name}"
   end
 
-  def say(msg : Int32) # override methods, can change the type of the message (specialized methods)
+  def say(msg : Int32) # *override methods, can change the type of the message (specialized methods)
     puts "Good Night, I worked for #{msg} hours"
   end
 end
 
-# Employee.new "Jorge" => Error: wrong number of arguments for 'Employee.new' (given 1, expected 2)
+# !Employee.new "Jorge" => Error: wrong number of arguments for 'Employee.new' (given 1, expected 2)
 employee = Employee.new "Jorge", "Microsoft"
 employee.greet
 employee.say 9
@@ -341,5 +341,68 @@ class BarBar < Bar
 end
 
 bar_bar_arr = [BarBar.new] of BarBar # default, current type
-bar_bar_arr2 = [BarBar.new] of Bar # cast to be a Bar array, wich it's right bc BarBar is a Bar
-# bar_arr = [Bar.new] of BarBar => error, Bar cant be a BarBar but BarBar can be a Bar
+bar_bar_arr2 = [BarBar.new] of Bar   # *cast to be a Bar array, wich it's right bc BarBar is a Bar
+# !bar_arr = [Bar.new] of BarBar => error, Bar cant be a BarBar but BarBar can be a Bar
+
+abstract class Animal # ?cant instantiate
+  def talk
+  end
+end
+
+class Dog < Animal
+  def talk
+    puts "Au!"
+  end
+end
+
+class Cat < Animal
+  def talk
+    puts "Miau!"
+  end
+end
+
+class PetOwner
+  getter pet : Animal
+
+  def initialize(@name : String, @pet : Animal) # ?pet will be a virutal type, Animal+ (any animal sucblass)
+  end
+end
+
+pai_de_pet = PetOwner.new "João", Cat.new
+pai_de_pet.pet.talk
+
+# *Class methods (or module)
+class CaesarCipher # ?https://en.wikipedia.org/wiki/Caesar_cipher
+  def self.encrypt(string : String)
+    encrypted = string.chars.map { |char| ((char.upcase.ord - 52) % 26 + 65).chr }.join
+    puts encrypted
+  end
+
+  def CaesarCipher.decrypt(string : String)
+    decrypted = encrypt(string)
+    puts decrypted
+  end
+end
+
+CaesarCipher.encrypt("HELLO") # => "URYYB"
+CaesarCipher.decrypt "URYYB"  # => HELLO
+
+# *Class variables
+
+class Counter
+  @@instances = 0 # ?its related to the class with the @@, not the instance
+
+  def initialize
+    @@instances += 1 # modify the variable every time a new instance is created
+  end
+
+  def self.instances
+    puts @@instances
+  end
+end
+
+Counter.instances # => 0
+Counter.new
+Counter.new
+Counter.new
+Counter.instances # => 3
