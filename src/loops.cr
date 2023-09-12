@@ -23,12 +23,12 @@ end
 puts "loop control"
 n = 0
 while n < 5
-    n += 1
-    if n == 3 # se for == 3, pula/cancela esse passo com o next e possa pro próximo número que é 4
-        puts "n = 3"
-        next
-    end
-    puts n
+  n += 1
+  if n == 3 # se for == 3, pula/cancela esse passo com o next e possa pro próximo número que é 4
+    puts "n = 3"
+    next
+  end
+  puts n
 end
 
 counter = 0
