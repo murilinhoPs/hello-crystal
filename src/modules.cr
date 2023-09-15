@@ -55,3 +55,18 @@ Extendido.estendido 2
 
 include Extendido
 estendido 2
+
+module MyClass(T)
+  def self.my_class
+    puts T.class
+    T
+  end
+
+  def self.my_class(x : T)
+    puts x.class
+    T
+  end
+end
+
+MyClass(Int32).my_class # *preciso inferir o tipo se chamar o metodo sem o tipo
+MyClass.my_class(1)
