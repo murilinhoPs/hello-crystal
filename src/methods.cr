@@ -187,3 +187,21 @@ plan begin: Time.local, end: 2.days.from_now
 def increment(value, by amount) # um nome diferente internamente for better read
   value + amount
 end
+
+class Six
+    def +(other)
+      6 + other
+    end
+  end
+
+  def add(x, y)
+    x + y
+  end
+
+  puts add Six.new, 10 # * will add the + methdos
+
+  def restricted_add(x : Number, y : Number)
+    x + y
+  end
+
+  #! restricted_add Six.new, 10 => Error: no overload matches 'restricted_add' with types Six, Int32
