@@ -38,7 +38,7 @@ def sum(*numbers, initial) # required named argument, without default value
   total
 end
 
-# puts sum 1, 2, 3  # Error, missing argument: initial
+#! sum 1, 2, 3  => Error, missing argument: initial
 puts sum 1, 2, 5, initial: 10 # => 18
 
 def foo(*, x)
